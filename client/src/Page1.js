@@ -6,16 +6,16 @@ import axios from 'axios';
 import uploadIcon from './assets/upload.svg';
 
 
-const deviceName = 'iPhone 13';
-const deviceType = 'Smartphone';
+var deviceName = 'iPhone 13';
+var deviceType = 'Smartphone';
 
 
 function Page1() {  
 
 	const handleSend = () => {
 		const deviceData = {
-		  deviceName: 'iPhone 13',
-		  deviceType: 'Smartphone',
+		  deviceName: deviceName,
+		  deviceType: deviceType,
 		};
 
 		// Send the message to the parent window
@@ -59,6 +59,38 @@ function Page1() {
       const data = await res.json();
 
       if (data.reply) {
+		  console.log(data.reply);
+		  const inputString = data.reply;
+
+			const devices = [
+			  "desktop",
+			  "laptop",
+			  "smartphone",
+			  "tablet",
+			  "externaldrive",
+			  "removablemedia",
+			  "other"
+			];
+			
+			
+			
+		const match = inputString.match(/Device:\s*([^,]+)/);
+
+		deviceName = match ? match[1].trim() : null;
+
+		console.log("Detected device name: ", deviceName);
+
+			// Convert input to lowercase for case-insensitive comparison
+			const lowerInput = inputString.toLowerCase();
+
+			// Find the first matching device
+			const foundDevice = devices.find(device => lowerInput.includes(device.toLowerCase()));
+
+			// Set deviceType based on the result
+			deviceType = foundDevice || "other";
+
+			console.log("Detected device type:", deviceType);
+
         setResponseHtml(`<p>${data.reply}</p>`);
       } else {
         setResponseHtml('Unexpected response format.');
