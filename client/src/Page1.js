@@ -138,7 +138,7 @@ function Page1() {
       />
 	  
 	   <button className="gray-button" onClick={handleSend}>
-			Send to Case Manager
+			Back to Case Manager
 		  </button>
 		</div>
 	
