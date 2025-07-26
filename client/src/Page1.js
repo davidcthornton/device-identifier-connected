@@ -7,7 +7,7 @@ import uploadIcon from './assets/upload.svg';
 
 
 var deviceName = 'iPhone 13';
-var deviceType = 'Smartphone';
+var deviceType = 'smartphone';
 
 
 function Page1() {  
@@ -19,7 +19,8 @@ function Page1() {
 		};
 
 		// Send the message to the parent window
-		window.opener.postMessage(deviceData, 'http://localhost:3000'); // Replace with actual Case Manager origin
+		window.opener.postMessage(deviceData, 'http://54.161.142.139:3000'); // Replace with actual Case Manager origin
+		
 
 		// Optionally close this tab after sending
 		window.close();
