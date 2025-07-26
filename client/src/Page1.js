@@ -19,7 +19,7 @@ function Page1() {
 		};
 
 		// Send the message to the parent window
-		window.opener.postMessage(deviceData, 'http://54.161.142.139:3000'); // Replace with actual Case Manager origin
+		window.opener.postMessage(deviceData, 'http://gamificationsoftware.org:3000'); // Replace with actual Case Manager origin
 		
 
 		// Optionally close this tab after sending
