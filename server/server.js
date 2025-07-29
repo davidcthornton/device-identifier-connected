@@ -21,7 +21,7 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static('public')); // Serve index.html from /public
 
 
-app.post('/api/image', upload.array('images'), async (req, res) => {
+app.post('/image', upload.array('images'), async (req, res) => {
   try {
     // Build messages array with a proper system message
     const input = [      
