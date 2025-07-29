@@ -19,7 +19,7 @@ function Page1() {
 		};
 
 		// Send the message to the parent window
-		window.opener.postMessage(deviceData, 'http://appdemo.gamificationsoftware.org'); // Replace with actual Case Manager origin
+		window.opener.postMessage(deviceData, 'https://appdemo.gamificationsoftware.org'); // Replace with actual Case Manager origin
 		
 
 		// Optionally close this tab after sending
