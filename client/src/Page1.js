@@ -19,7 +19,7 @@ function Page1() {
 		};
 
 		// Send the message to the parent window
-		window.opener.postMessage(deviceData, 'http://gamificationsoftware.org:3000'); // Replace with actual Case Manager origin
+		window.opener.postMessage(deviceData, 'http://appdemo.gamificationsoftware.org'); // Replace with actual Case Manager origin
 		
 
 		// Optionally close this tab after sending
@@ -32,7 +32,8 @@ function Page1() {
 	if (!process.env.REACT_APP_API_URL) {
 		serverURL = 'http://127.0.0.1:5000/api/image';
 	} else {
-		serverURL = process.env.REACT_APP_API_URL + '/api/image';
+		//serverURL = process.env.REACT_APP_API_URL + '/api/image';
+		serverURL = '/imageapi';
 	}
   
   console.log("API base URL:", process.env.REACT_APP_API_URL);
