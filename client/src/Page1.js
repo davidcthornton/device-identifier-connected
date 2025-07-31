@@ -1,32 +1,23 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
 import uploadIcon from './assets/upload.svg';
-
 
 var deviceName = 'iPhone 13';
 var deviceType = 'smartphone';
 
 
-function Page1() {  
+function Page1() {
 
 	const handleSend = () => {
 		const deviceData = {
-		  deviceName: deviceName,
-		  deviceType: deviceType,
+			deviceName: deviceName,
+			deviceType: deviceType,
 		};
 
-		// Send the message to the parent window
-		window.opener.postMessage(deviceData, 'https://appdemo.gamificationsoftware.org'); // Replace with actual Case Manager origin
-		
-
-		// Optionally close this tab after sending
+		window.opener.postMessage(deviceData, 'https://appdemo.gamificationsoftware.org');
 		window.close();
-	  };
-  
-  
+	};
+
 	let serverURL;
 
 	if (!process.env.REACT_APP_API_URL) {
@@ -35,115 +26,104 @@ function Page1() {
 		//serverURL = process.env.REACT_APP_API_URL + '/api/image';
 		serverURL = '/imageapi/image';
 	}
-  
-  console.log("API base URL:", process.env.REACT_APP_API_URL);
-  console.log("serverURL is " + serverURL);
-  
-  
-  const navigate = useNavigate();
-  const [responseHtml, setResponseHtml] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setResponseHtml('');
+	//console.log("API base URL:", process.env.REACT_APP_API_URL);
+	//console.log("serverURL is " + serverURL);
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+	const [responseHtml, setResponseHtml] = useState('');
+	const [loading, setLoading] = useState(false);
 
-    try {
-      const res = await fetch(serverURL, {
-        method: 'POST',
-        body: formData,
-      });
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		setResponseHtml('');
 
-      const data = await res.json();
+		const form = e.currentTarget;
+		const formData = new FormData(form);
 
-      if (data.reply) {
-		  console.log(data.reply);
-		  const inputString = data.reply;
+		try {
+			const res = await fetch(serverURL, {
+				method: 'POST',
+				body: formData,
+			});
 
-			const devices = [
-			  "desktop",
-			  "laptop",
-			  "smartphone",
-			  "tablet",
-			  "externaldrive",
-			  "removablemedia",
-			  "other"
-			];
-			
-			
-			
-		const match = inputString.match(/Device:\s*([^,]+)/);
+			const data = await res.json();
 
-		deviceName = match ? match[1].trim() : null;
+			if (data.reply) {
+				console.log(data.reply);
+				const inputString = data.reply;
 
-		console.log("Detected device name: ", deviceName);
+				const devices = [
+					"desktop",
+					"laptop",
+					"smartphone",
+					"tablet",
+					"externaldrive",
+					"removablemedia",
+					"other"
+				];
 
-			// Convert input to lowercase for case-insensitive comparison
-			const lowerInput = inputString.toLowerCase();
+				const match = inputString.match(/Device:\s*([^,]+)/);
+				deviceName = match ? match[1].trim() : null;
+				console.log("Detected device name: ", deviceName);
+				
+				const lowerInput = inputString.toLowerCase();
+				const foundDevice = devices.find(device => lowerInput.includes(device.toLowerCase()));
+				deviceType = foundDevice || "other";
 
-			// Find the first matching device
-			const foundDevice = devices.find(device => lowerInput.includes(device.toLowerCase()));
+				//console.log("Detected device type:", deviceType);
 
-			// Set deviceType based on the result
-			deviceType = foundDevice || "other";
+				setResponseHtml(`<p>${data.reply}</p>`);
+			} else {
+				setResponseHtml('Unexpected response format.');
+			}
+		} catch (err) {
+			console.error(err);
+			setResponseHtml('Error contacting server.');
+		} finally {
+			setLoading(false);
+		}
+	};
 
-			console.log("Detected device type:", deviceType);
+	return (
+		<div className="Page">
+			<h1 className="text-2xl font-bold mb-4">Upload Images</h1>
 
-        setResponseHtml(`<p>${data.reply}</p>`);
-      } else {
-        setResponseHtml('Unexpected response format.');
-      }
-    } catch (err) {
-      console.error(err);
-      setResponseHtml('Error contacting server.');
-    } finally {
-      setLoading(false);
-    }
-  };
+			<form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
+				<input type="file" className="fileinput" name="images" accept="image/*" multiple required />
+				<div>
+					<button
+						type="submit"
+						class="gray-button"
+						disabled={loading}
+					>
+						<img src={uploadIcon} alt="upload icon" class="icon" style={{ width: '30px', height: '30px' }} />
+						{loading ? 'Identifying...' : 'Send to Assistant'}
 
-  return (
-    <div className="Page">
-      <h1 className="text-2xl font-bold mb-4">Upload Images</h1>
+					</button>
+				</div>
+			</form>
 
-      <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
-        <input type="file" className="fileinput" name="images" accept="image/*" multiple required />
-        <div>
-          <button
-            type="submit"
-			class="gray-button"
-            disabled={loading}
-          >
-		  <img src={uploadIcon} alt="upload icon" class="icon" style={{ width: '30px', height: '30px' }} />
-            {loading ? 'Identifying...' : 'Send to Assistant'}
-			 
-          </button>
-        </div>
-      </form>
+			<div class="tips">
+				<strong>Tips:</strong>
+				<ol>
+					<li>Take at least two photos, front and back, or from different angles/sides</li>
+					<li>If applicable, remove protective cover</li>
+				</ol>
+			</div>
 
-		<div class="tips">
-		  <strong>Tips:</strong>
-		  <ol>
-			<li>Take at least two photos, front and back, or from different angles/sides</li>
-			<li>If applicable, remove protective cover</li>
-		  </ol>
+			<div
+				id="response"
+				className="resultBox"
+				dangerouslySetInnerHTML={{ __html: responseHtml }}
+			/>
+
+			<button className="gray-button" onClick={handleSend}>
+				Back to Case Manager
+			</button>
 		</div>
 
-      <div
-        id="response"
-		className="resultBox"
-        dangerouslySetInnerHTML={{ __html: responseHtml }}
-      />
-	  
-	   <button className="gray-button" onClick={handleSend}>
-			Back to Case Manager
-		  </button>
-		</div>
-	
-  );
+	);
 }
 
 export default Page1;
