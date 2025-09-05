@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
 import uploadIcon from './assets/upload.svg';
+import removingProtectiveSleeveFromSmartphone from './assets/removingProtectiveSleeveFromSmartphone.png';
 
 var deviceName = 'iPhone 13';
 var deviceType = 'smartphone';
+
 
 
 function Page1() {
@@ -29,14 +31,14 @@ function Page1() {
 	let serverURL;
 
 	if (!process.env.REACT_APP_API_URL) {
-		serverURL = 'http://127.0.0.1:5000/api/image';
+		serverURL = 'http://127.0.0.1:5000/image';
 	} else {
 		//serverURL = process.env.REACT_APP_API_URL + '/api/image';
-		serverURL = '/imageapi/image';
+		serverURL = '/image';
 	}
 
-	//console.log("API base URL:", process.env.REACT_APP_API_URL);
-	//console.log("serverURL is " + serverURL);
+	console.log("API base URL:", process.env.REACT_APP_API_URL);
+	console.log("serverURL is " + serverURL);
 
 	const [responseHtml, setResponseHtml] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -121,7 +123,7 @@ function Page1() {
 						disabled={loading}
 					>
 						<img src={uploadIcon} alt="upload icon" class="icon" style={{ width: '30px', height: '30px' }} />
-						{loading ? 'Identifying...' : 'Send to Assistant'}
+						{loading ? 'Identifying...' : 'Identify Now'}
 
 					</button>
 				</div>
@@ -131,8 +133,13 @@ function Page1() {
 				<strong>Tips:</strong>
 				<ol>
 					<li>Take at least two photos, front and back, or from different angles/sides</li>
-					<li>If applicable, remove protective cover</li>
+					<li>If applicable, remove protective cover</li>					
 				</ol>
+				<img
+          src={removingProtectiveSleeveFromSmartphone}
+          alt="Description of image"
+          style={{ width: '40%', height: 'auto' }}
+        />
 			</div>
 
 			<div
