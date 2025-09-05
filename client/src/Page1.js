@@ -34,7 +34,7 @@ function Page1() {
 		serverURL = 'http://127.0.0.1:5000/image';
 	} else {
 		//serverURL = process.env.REACT_APP_API_URL + '/api/image';
-		serverURL = '/image';
+		serverURL = '/imageapi/image';
 	}
 
 	console.log("API base URL:", process.env.REACT_APP_API_URL);
