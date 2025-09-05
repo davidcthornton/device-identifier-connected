@@ -8,13 +8,21 @@ var deviceType = 'smartphone';
 
 function Page1() {
 
+	const [selectedImages, setSelectedImages] = useState([]);
+
 	const handleSend = () => {
 		const deviceData = {
-			deviceName: deviceName,
-			deviceType: deviceType,
+			deviceName,
+			deviceType,
+			// NEW: optional array of File objects (can be empty)
+			images: selectedImages,
 		};
 
-		window.opener.postMessage(deviceData, 'https://appdemo.gamificationsoftware.org');
+		// NEW: Prefer dynamic opener origin so dev/prod both work.
+		const openerOrigin =
+			document.referrer ? new URL(document.referrer).origin : 'https://appdemo.gamificationsoftware.org';
+
+		window.opener.postMessage(deviceData, openerOrigin);
 		window.close();
 	};
 
@@ -41,6 +49,13 @@ function Page1() {
 		const form = e.currentTarget;
 		const formData = new FormData(form);
 
+		// NEW: also keep a copy of the files the user picked so we can postMessage them later
+		// Note: we read from the <input name="images" ...> that already exists
+		const files = form.querySelector('input[name="images"]')?.files;
+		setSelectedImages(files ? Array.from(files) : []);
+
+
+
 		try {
 			const res = await fetch(serverURL, {
 				method: 'POST',
@@ -66,7 +81,7 @@ function Page1() {
 				const match = inputString.match(/Device:\s*([^,]+)/);
 				deviceName = match ? match[1].trim() : null;
 				console.log("Detected device name: ", deviceName);
-				
+
 				const lowerInput = inputString.toLowerCase();
 				const foundDevice = devices.find(device => lowerInput.includes(device.toLowerCase()));
 				deviceType = foundDevice || "other";
@@ -90,7 +105,15 @@ function Page1() {
 			<h1 className="text-2xl font-bold mb-4">Upload Images</h1>
 
 			<form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
-				<input type="file" className="fileinput" name="images" accept="image/*" multiple required />
+				<input
+					type="file"
+					className="fileinput"
+					name="images"
+					accept="image/*"
+					multiple
+					required
+					onChange={(e) => setSelectedImages(Array.from(e.target.files || []))}
+				/>
 				<div>
 					<button
 						type="submit"
