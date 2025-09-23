@@ -89,7 +89,7 @@ function Page1() {
 				const foundDevice = devices.find(device => lowerInput.includes(device.toLowerCase()));
 				deviceType = foundDevice || "other";
 
-				//console.log("Detected device type:", deviceType);
+				console.log("Detected device type:", deviceType);
 
 				setResponseHtml(`<p>${data.reply}</p>`);
 			} else {
