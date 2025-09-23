@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import uploadIcon from './assets/upload.svg';
 import removingProtectiveSleeveFromSmartphone from './assets/removingProtectiveSleeveFromSmartphone.png';
 
-var deviceName = 'iPhone 13';
-var deviceType = 'smartphone';
+var deviceName = 'unknown';
+var deviceType = 'other';
 
 
 
@@ -77,6 +77,7 @@ function Page1() {
 					"tablet",
 					"externaldrive",
 					"removablemedia",
+					"router",
 					"other"
 				];
 
