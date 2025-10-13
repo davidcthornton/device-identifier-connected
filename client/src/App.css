@@ -43,11 +43,11 @@ h1 {
   }
 }
 
-
+/*
 .fileinput {
   display: block;
-  margin: 20px auto; /* top/bottom spacing + auto horizontal centering */
-}
+  margin: 20px auto;
+}*/
 
 
 .button-container {

@@ -121,53 +121,85 @@ function Page1() {
 			<h1 className="text-2xl font-bold mb-4">Upload Images</h1>
 
 			<form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
-				<input
-					type="file"
-					className="fileinput"
-					name="images"
-					accept="image/*"
-					multiple
-					onChange={(e) => appendToSelected(e.target.files)}
-				/>
 
 
-				{/* Hidden camera capture input */}
-				<input
-					id="cameraInput"
-					type="file"
-					name="images"
-					accept="image/*"
-					capture="environment"    // Prefer rear camera on mobile, falls back gracefully
-					multiple
-					style={{ display: 'none' }}
-					onChange={(e) => appendToSelected(e.target.files)}
-				/>
 
-				{/* Visible button to trigger the camera input */}
-				<div style={{ marginTop: 8 }}>
-					<button
-						type="button"
-						className="gray-button"
-						onClick={() => document.getElementById('cameraInput')?.click()}
+				{/* Either/Or Section */}
+				<fieldset
+					style={{
+						border: '1px solid #ccc',
+						borderRadius: '8px',
+						padding: '16px',
+						marginTop: '16px',
+					}}
+				>
+					<legend
+						style={{
+							padding: '0 8px',
+							fontWeight: 'bold',
+							color: '#555',
+						}}
 					>
-						📷 Take Photos
-					</button>
-				</div>
+						Choose One:
+					</legend>
+
+
+					<input
+						type="file"
+						className="fileinput"
+						name="images"
+						accept="image/*"
+						multiple
+						onChange={(e) => appendToSelected(e.target.files)}
+					/>
+
+
+					{/* Hidden camera capture input */}
+					<input
+						id="cameraInput"
+						type="file"
+						name="images"
+						accept="image/*"
+						capture="environment"    // Prefer rear camera on mobile, falls back gracefully
+						multiple
+						style={{ display: 'none' }}
+						onChange={(e) => appendToSelected(e.target.files)}
+					/>
+
+					{/* Visible button to trigger the camera input */}
+					<div style={{ marginTop: 8 }}>
+						<button
+							type="button"
+							className="gray-button"
+							onClick={() => document.getElementById('cameraInput')?.click()}
+						>
+							📷 Take Photos
+						</button>
+					</div>
+
+				</fieldset>
 
 
 
 
 
 
-				<div>
+
+				<div style={{ marginTop: 20 }}>
 					<button
 						type="submit"
-						class="gray-button"
+						className="gray-button"
 						disabled={loading}
+						style={{
+							fontWeight: 'bold',
+							padding: '10px 20px',
+							borderRadius: '6px',
+							marginTop: '10px',
+							border: '2px solid rgba(0,0,0)',
+						}}
 					>
-						<img src={uploadIcon} alt="upload icon" class="icon" style={{ width: '30px', height: '30px' }} />
+						<img src={uploadIcon} alt="upload icon" className="icon" style={{ width: '30px', height: '30px', marginRight: '8px' }} />
 						{loading ? 'Identifying...' : 'Identify Now'}
-
 					</button>
 				</div>
 			</form>
