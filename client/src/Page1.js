@@ -191,11 +191,11 @@ function Page1() {
 				dangerouslySetInnerHTML={{ __html: responseHtml }}
 			/>
 
-			
+			{document.referrer && (
 				<button className="gray-button" onClick={handleSend}>
 					Back to Case Manager
 				</button>
-			
+			)}
 
 		</div>
 
