@@ -134,13 +134,13 @@ function Page1() {
 				<strong>Tips:</strong>
 				<ol>
 					<li>Take at least two photos, front and back, or from different angles/sides</li>
-					<li>If applicable, remove protective cover</li>					
+					<li>If applicable, remove protective cover</li>
 				</ol>
 				<img
-          src={removingProtectiveSleeveFromSmartphone}
-          alt="Description of image"
-          style={{ width: '40%', height: 'auto' }}
-        />
+					src={removingProtectiveSleeveFromSmartphone}
+					alt="Description of image"
+					style={{ width: '40%', height: 'auto' }}
+				/>
 			</div>
 
 			<div
@@ -149,9 +149,12 @@ function Page1() {
 				dangerouslySetInnerHTML={{ __html: responseHtml }}
 			/>
 
-			<button className="gray-button" onClick={handleSend}>
-				Back to Case Manager
-			</button>
+			{document.referrer && (
+				<button className="gray-button" onClick={handleSend}>
+					Back to Case Manager
+				</button>
+			)}
+
 		</div>
 
 	);
