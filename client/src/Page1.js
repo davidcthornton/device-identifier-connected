@@ -11,6 +11,10 @@ var deviceType = 'other';
 function Page1() {
 
 	const [selectedImages, setSelectedImages] = useState([]);
+	// Allow both pick-from-folder and camera captures to accumulate
+	const appendToSelected = (files) =>
+		setSelectedImages((prev) => [...prev, ...Array.from(files || [])]);
+
 
 	const handleSend = () => {
 		const deviceData = {
@@ -51,10 +55,11 @@ function Page1() {
 		const form = e.currentTarget;
 		const formData = new FormData(form);
 
-		// NEW: also keep a copy of the files the user picked so we can postMessage them later
-		// Note: we read from the <input name="images" ...> that already exists
-		const files = form.querySelector('input[name="images"]')?.files;
-		setSelectedImages(files ? Array.from(files) : []);
+		const allFiles = Array.from(
+			form.querySelectorAll('input[name="images"]')
+		).flatMap((inp) => Array.from(inp.files || []));
+		setSelectedImages(allFiles);
+
 
 
 
@@ -115,8 +120,38 @@ function Page1() {
 					accept="image/*"
 					multiple
 					required
-					onChange={(e) => setSelectedImages(Array.from(e.target.files || []))}
+					onChange={(e) => appendToSelected(e.target.files)}
 				/>
+
+
+				{/* Hidden camera capture input */}
+				<input
+					id="cameraInput"
+					type="file"
+					name="images"
+					accept="image/*"
+					capture="environment"    // Prefer rear camera on mobile, falls back gracefully
+					multiple
+					style={{ display: 'none' }}
+					onChange={(e) => appendToSelected(e.target.files)}
+				/>
+
+				{/* Visible button to trigger the camera input */}
+				<div style={{ marginTop: 8 }}>
+					<button
+						type="button"
+						className="gray-button"
+						onClick={() => document.getElementById('cameraInput')?.click()}
+					>
+						📷 Take Photos
+					</button>
+				</div>
+
+
+
+
+
+
 				<div>
 					<button
 						type="submit"
