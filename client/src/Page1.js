@@ -58,6 +58,14 @@ function Page1() {
 		const allFiles = Array.from(
 			form.querySelectorAll('input[name="images"]')
 		).flatMap((inp) => Array.from(inp.files || []));
+
+
+		if (allFiles.length === 0) {
+			setLoading(false);
+			setResponseHtml('Please select or capture at least one image.');
+			return;
+		}
+
 		setSelectedImages(allFiles);
 
 
@@ -119,7 +127,6 @@ function Page1() {
 					name="images"
 					accept="image/*"
 					multiple
-					required
 					onChange={(e) => appendToSelected(e.target.files)}
 				/>
 
