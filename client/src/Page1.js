@@ -118,7 +118,7 @@ function Page1() {
 
 	return (
 		<div className="Page">
-			<h1 className="text-2xl font-bold mb-4">Upload Images</h1>
+			<h1 className="text-2xl font-bold mb-4">Device Identifier</h1>
 
 			<form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
 
@@ -133,15 +133,7 @@ function Page1() {
 						marginTop: '16px',
 					}}
 				>
-					<legend
-						style={{
-							padding: '0 8px',
-							fontWeight: 'bold',
-							color: '#555',
-						}}
-					>
-						Choose One:
-					</legend>
+				
 
 
 					<input
@@ -153,7 +145,8 @@ function Page1() {
 						onChange={(e) => appendToSelected(e.target.files)}
 					/>
 
-
+					
+<p> or </p>
 					{/* Hidden camera capture input */}
 					<input
 						id="cameraInput"
@@ -207,7 +200,7 @@ function Page1() {
 			<div class="tips">
 				<strong>Tips:</strong>
 				<ol>
-					<li>Take at least two photos, front and back, or from different angles/sides</li>
+					<li>For best results, take two photos, front and back, or from different angles/sides</li>
 					<li>If applicable, remove protective cover</li>
 				</ol>
 				<img
