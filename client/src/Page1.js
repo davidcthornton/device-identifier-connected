@@ -133,7 +133,7 @@ function Page1() {
 						marginTop: '16px',
 					}}
 				>
-				
+
 
 
 					<input
@@ -145,8 +145,8 @@ function Page1() {
 						onChange={(e) => appendToSelected(e.target.files)}
 					/>
 
-					
-<p> or </p>
+
+					<p> or </p>
 					{/* Hidden camera capture input */}
 					<input
 						id="cameraInput"
@@ -165,6 +165,7 @@ function Page1() {
 							type="button"
 							className="gray-button"
 							onClick={() => document.getElementById('cameraInput')?.click()}
+							style={{ display: 'flex', alignItems: 'stretch' }}
 						>
 							📷 Take Photos
 						</button>
