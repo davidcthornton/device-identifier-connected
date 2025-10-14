@@ -163,9 +163,9 @@ function Page1() {
 					<div style={{ marginTop: 8 }}>
 						<button
 							type="button"
-							className="gray-button"
+							
 							onClick={() => document.getElementById('cameraInput')?.click()}
-							style={{ display: 'flex', alignItems: 'stretch' }}
+							style={{ display: 'flex', alignItems: 'left' }}
 						>
 							📷 Take Photos
 						</button>
