@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  server:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./server:/app
+      - /app/node_modules          # keep node_modules inside the container
+    command: sh -c "npm ci && npm run dev"
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+      # If your server needs to be reachable by the client at http://localhost:3000:
+      - CORS_ORIGIN=http://localhost:5173
+    ports:
+      - "3000:3000"
+    networks:
+      - appnet
+
+  client:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    # CRA: "npm start" / Vite: "npm run dev -- --host"
+    command: sh -c "npm ci && npm run dev"
+    environment:
+      - NODE_ENV=development
+      # Vite example: expose the API URL to the browser
+      - VITE_API_URL=http://localhost:3000
+      # Helps file watching inside Docker on macOS/Windows:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    ports:
+      # CRA defaults to 3000; Vite defaults to 5173 — pick the one you use:
+      - "5173:5173"
+      - "3001:3000"
+    depends_on:
+      - server
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

@@ -1,4 +1,4 @@
-const port = 5000;
+const port = 3000;
 
 import OpenAI from "openai";
 import express from 'express';
@@ -80,4 +80,4 @@ app.get('/', (req, res) => {
   res.send('Dave is very good looking');
 });
 
-app.listen(port, () => console.log('Server running on port 5000'));
+app.listen(port, () => console.log('Server running on port 3000'));

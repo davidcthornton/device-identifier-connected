@@ -1,0 +1,30 @@
+services:
+  server:
+    build:
+      context: ./server
+    env_file: .env
+    ports:
+      - "3000:3000"
+    # Example: DB connection string comes from env
+    # environment:
+    #   - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - appnet
+
+  client:
+    build:
+      context: ./client
+    depends_on:
+      - server
+    ports:
+      - "8080:80"
+    environment:
+      # Let the frontend know where the API lives; for a CRA build,
+      # you usually bake this at build time via REACT_APP_* variables.
+      - REACT_APP_API_URL=http://localhost:3000
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
