@@ -32,14 +32,10 @@ function Page1() {
 		window.close();
 	};
 
-	let serverURL;
+	// CRA only
+	const API_BASE = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
+	const serverURL = `${API_BASE || ''}/image`;
 
-	if (!process.env.REACT_APP_API_URL) {
-		serverURL = 'http://127.0.0.1:3000/image';
-	} else {
-		//serverURL = process.env.REACT_APP_API_URL + '/api/image';
-		serverURL = '/imageapi/image';
-	}
 
 	console.log("API base URL:", process.env.REACT_APP_API_URL);
 	console.log("serverURL is " + serverURL);
@@ -163,7 +159,7 @@ function Page1() {
 					<div style={{ marginTop: 8 }}>
 						<button
 							type="button"
-							
+
 							onClick={() => document.getElementById('cameraInput')?.click()}
 							style={{ display: 'flex', alignItems: 'left' }}
 						>
