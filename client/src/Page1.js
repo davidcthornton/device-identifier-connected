@@ -69,8 +69,6 @@ function Page1() {
 		setSelectedImages(allFiles);
 
 
-
-
 		try {
 			const res = await fetch(serverURL, {
 				method: 'POST',
@@ -122,8 +120,6 @@ function Page1() {
 
 			<form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
 
-
-
 				{/* Either/Or Section */}
 				<fieldset
 					style={{
@@ -134,8 +130,6 @@ function Page1() {
 					}}
 				>
 
-
-
 					<input
 						type="file"
 						className="fileinput"
@@ -144,7 +138,6 @@ function Page1() {
 						multiple
 						onChange={(e) => appendToSelected(e.target.files)}
 					/>
-
 
 					<p> or </p>
 					{/* Hidden camera capture input */}
@@ -163,7 +156,6 @@ function Page1() {
 					<div style={{ marginTop: 8 }}>
 						<button
 							type="button"
-							
 							onClick={() => document.getElementById('cameraInput')?.click()}
 							style={{ display: 'flex', alignItems: 'left' }}
 						>
@@ -172,11 +164,6 @@ function Page1() {
 					</div>
 
 				</fieldset>
-
-
-
-
-
 
 
 				<div style={{ marginTop: 20 }}>
